@@ -2,7 +2,7 @@
 LLM Interface Module (Brain)
 
 This module provides a unified interface for interacting with different Large Language Models
-(OpenAI and Ollama). It supports both streaming and non-streaming responses.
+(OpenAI, Groq, and Ollama). It supports both streaming and non-streaming responses.
 """
 
 import json
@@ -11,7 +11,7 @@ from fastapi import HTTPException
 import httpx
 from openai import AsyncOpenAI
 
-from configs.config import ollama_settings, openai_settings
+from configs.config import ollama_settings, openai_settings, groq_settings
 from lib.logger import log
 
 
@@ -22,13 +22,13 @@ async def use_brain(
     respond_in_json: bool = False,
     ctx_window: int = 2048,
     prediction: int = -2,
-    inference: str = "openai",
+    inference: str = "groq",
     temperature: Optional[float] = None,
 ) -> Union[AsyncGenerator[str, None], str]:
     """
-    Execute LLM inference using OpenAI or Ollama backends.
+    Execute LLM inference using OpenAI, Groq, or Ollama backends.
     
-    This function provides a unified interface for both OpenAI and Ollama models,
+    This function provides a unified interface for multiple LLM providers,
     supporting both streaming and non-streaming responses.
 
     Args:
@@ -38,7 +38,7 @@ async def use_brain(
         respond_in_json: Request JSON-formatted response (Ollama only)
         ctx_window: Context window size in tokens (Ollama only)
         prediction: Number of tokens to predict, -2 for unlimited (Ollama only)
-        inference: Backend provider - either "openai" or "ollama"
+        inference: Backend provider - "groq" (default), "openai", or "ollama"
         temperature: Sampling temperature (0.0-1.0), controls randomness
 
     Returns:
@@ -54,7 +54,72 @@ async def use_brain(
     if not messages:
         raise HTTPException(status_code=400, detail="Messages cannot be empty.")
 
-    if inference == "openai":
+    if inference == "groq":
+        try:
+            # Groq uses OpenAI-compatible API with custom base URL
+            if not groq_settings.GROQ_API_KEY:
+                raise HTTPException(
+                    status_code=500, 
+                    detail="GROQ_API_KEY not configured. Please set it in your .env file."
+                )
+            
+            client = AsyncOpenAI(
+                api_key=groq_settings.GROQ_API_KEY,
+                base_url=groq_settings.GROQ_API_BASE
+            )
+            
+            # Use Groq's default model if not specified
+            if model == "gpt-4o":
+                model = groq_settings.GROQ_API_MODEL
+
+            if stream:
+                async def stream_response() -> AsyncGenerator[str, None]:
+                    try:
+                        completion_params = {
+                            "model": model,
+                            "messages": messages,
+                            "stream": True
+                        }
+                        if temperature is not None:
+                            completion_params["temperature"] = temperature
+
+                        response = await client.chat.completions.create(**completion_params)
+                        async for chunk in response:
+                            if chunk.choices and chunk.choices[0].delta and chunk.choices[0].delta.content:
+                                yield chunk.choices[0].delta.content
+                    except Exception as e:
+                        log(f"Groq streaming error: {e}")
+                        raise HTTPException(status_code=500, detail=f"Groq streaming error: {e}")
+
+                return stream_response()
+
+            else:
+                completion_params = {
+                    "model": model,
+                    "messages": messages,
+                    "stream": False
+                }
+                if temperature is not None:
+                    completion_params["temperature"] = temperature
+
+                response = await client.chat.completions.create(**completion_params)
+                
+                if not response.choices or not response.choices[0].message:
+                    raise HTTPException(status_code=500, detail="No response from Groq")
+                
+                full_text = response.choices[0].message.content
+                if not full_text:
+                    raise HTTPException(status_code=500, detail="Empty response from Groq")
+                
+                return full_text
+
+        except HTTPException:
+            raise
+        except Exception as e:
+            log(f"Groq Error: {e}")
+            raise HTTPException(status_code=500, detail=f"Groq error: {e}")
+
+    elif inference == "openai":
         try:
             client = AsyncOpenAI(api_key=openai_settings.OPENAI_API_KEY)
 

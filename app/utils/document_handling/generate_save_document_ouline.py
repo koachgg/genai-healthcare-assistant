@@ -97,7 +97,7 @@ async def process_page_hint(pdf_data, page_number, hint):
     ]
 
     try:
-        response_text = await use_brain(messages=messages, stream=False, inference="openai")
+        response_text = await use_brain(messages=messages, stream=False, inference="groq")
         
         # Parse JSON response with error handling
         try:
@@ -306,7 +306,7 @@ async def generate_and_save_document_outline(pdf_data, pdf_name, userId, documen
 
     try:
         # Fixed: Properly handle the async call
-        document_outline = await use_brain(messages=messages, stream=False, inference="openai")
+        document_outline = await use_brain(messages=messages, stream=False, inference="groq")
         print(document_outline)
 
         log(f'Document text outline generated in {time() - start_time} seconds')

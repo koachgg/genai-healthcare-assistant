@@ -17,10 +17,16 @@ This guide helps you quickly evaluate the Healthcare Document Assistant project.
 
 3. **Edit `app/.env`** with minimal configuration:
    ```env
-   OPENAI_API_KEY=sk-your-key-here
+   # Get FREE API key from https://console.groq.com
+   GROQ_API_KEY=gsk-your-key-here
+   GROQ_API_MODEL=llama-3.1-70b-versatile
+   
+   # AWS S3 credentials
    access_key=your-aws-key
    secret_key=your-aws-secret
    ```
+   
+   **Note**: Groq is FREE and uses open-source models!
 
 4. **Start everything**:
    ```bash

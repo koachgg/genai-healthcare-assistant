@@ -126,6 +126,25 @@ class OpenAISettings(BaseSettings):
         env_file_encoding = "utf-8"
         extra = "ignore"
 
+
+class GroqSettings(BaseSettings):
+    """
+    Groq API configuration (Open-source LLM inference).
+    
+    Attributes:
+        GROQ_API_KEY: Groq API key for authentication (free tier available)
+        GROQ_API_MODEL: Default model to use (llama-3.1-70b-versatile, mixtral-8x7b, etc.)
+        GROQ_API_BASE: Groq API base URL
+    """
+    GROQ_API_KEY: Optional[str] = None
+    GROQ_API_MODEL: str = "llama-3.1-70b-versatile"
+    GROQ_API_BASE: str = "https://api.groq.com/openai/v1"
+
+    class Config:
+        env_file = ".env"
+        env_file_encoding = "utf-8"
+        extra = "ignore"
+
 class GoogleDriveSettings(BaseSettings):
     """
     Google Drive API configuration.
@@ -174,6 +193,7 @@ qdrant_settings = QdrantSettings()
 ollama_settings = OllamaSettings()
 aws_settings = AWSSettings()
 openai_settings = OpenAISettings()
+groq_settings = GroqSettings()
 google_drive_settings = GoogleDriveSettings()
 
 

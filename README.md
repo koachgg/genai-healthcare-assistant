@@ -83,10 +83,11 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed architecture docum
 - **MongoDB** - Document metadata storage
 - **Qdrant** - Vector database for semantic search
 
-### AI & ML
+### AI & ML (100% Open Source)
 - **LangChain** - LLM orchestration framework
-- **OpenAI GPT-4o** - Primary language model
+- **Groq API** - Free, fast inference with Llama 3.1 (Primary)
 - **Ollama** - Local LLM alternative
+- **OpenAI GPT-4o** - Optional paid alternative
 - **Sentence Transformers** - Document embeddings
 
 ### Document Processing
@@ -107,7 +108,8 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for detailed architecture docum
 - MongoDB instance
 - Qdrant instance
 - AWS S3 bucket
-- (Optional) Ollama for local LLM
+- Groq API key (Free at https://console.groq.com)
+- (Optional) OpenAI API key or Ollama for alternative LLMs
 
 ### Installation
 

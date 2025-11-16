@@ -13,7 +13,33 @@ Before you begin, ensure you have:
 
 ## Required Services Setup
 
-### 1. 🔑 OpenAI API Key (REQUIRED)
+### 1. 🤖 Groq API Key (REQUIRED - FREE)
+
+**Recommended - Fully Open Source with Free API**
+
+**Steps**:
+1. Go to https://console.groq.com/
+2. Sign up (GitHub authentication available)
+3. Navigate to **API Keys**
+4. Click **Create API Key**
+5. Copy the key (starts with `gsk_...`)
+6. Add to `.env`:
+   ```env
+   GROQ_API_KEY=gsk-your-actual-key-here
+   GROQ_API_MODEL=llama-3.1-70b-versatile
+   ```
+
+**Why Groq?**
+- ✅ 100% FREE with generous limits
+- ✅ Open-source models (Llama 3.1, Mixtral)
+- ✅ Lightning-fast inference (fastest API)
+- ✅ OpenAI-compatible API
+
+---
+
+### 1b. 🔑 OpenAI API Key (OPTIONAL - PAID)
+
+**Alternative LLM Option**
 
 **Steps**:
 1. Go to https://platform.openai.com/
@@ -25,6 +51,8 @@ Before you begin, ensure you have:
    ```env
    OPENAI_API_KEY=sk-your-actual-key-here
    ```
+
+**Note**: To use OpenAI, change `inference="groq"` to `inference="openai"` in endpoints.
 
 ---
 
