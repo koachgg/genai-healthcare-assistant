@@ -1,0 +1,85 @@
+# Healthcare Document Assistant - Docker Compose Configuration
+
+version: '3.8'
+
+services:
+  # FastAPI Application
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: healthcare-doc-assistant
+    ports:
+      - "8000:8000"
+    environment:
+      - DOCUMENT_DB_CONNECTION_STRING=mongodb://mongodb:27017/healthcare_docs
+      - QDRANT_HOST_URL=http://qdrant:6333
+      - OLLAMA_ENDPOINT_URL=http://ollama:11434
+    env_file:
+      - ./app/.env
+    volumes:
+      - ./app/logs:/app/logs
+      - ./app/credentials:/app/credentials
+    depends_on:
+      - mongodb
+      - qdrant
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: healthcare-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=healthcare_docs
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+
+  # Qdrant Vector Database
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: healthcare-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+
+  # Ollama (Optional - for local LLM)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: healthcare-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+    # Optional: Pull models on startup
+    # command: >
+    #   sh -c "ollama serve & sleep 10 && 
+    #          ollama pull llama3.3:70b && 
+    #          ollama pull nomic-embed-text && 
+    #          wait"
+
+volumes:
+  mongodb_data:
+    driver: local
+  qdrant_data:
+    driver: local
+  ollama_data:
+    driver: local
+
+networks:
+  healthcare-network:
+    driver: bridge
