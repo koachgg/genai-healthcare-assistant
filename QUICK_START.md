@@ -47,7 +47,7 @@ See detailed instructions in [docs/SETUP.md](docs/SETUP.md)
 **Files to check**:
 - `app/main.py` - Application entry point (clean, well-documented)
 - `app/configs/config.py` - Configuration management
-- `app/lib/brain.py` - LLM interface (unified OpenAI/Ollama)
+- `app/lib/brain.py` - LLM interface (unified Groq/OpenAI/Ollama)
 - `app/services/document_encoder.py` - Document ID and path management
 - `app/api/v1/routes.py` - API structure
 - `app/api/v1/endpoints/trigger_process_document.py` - Example endpoint

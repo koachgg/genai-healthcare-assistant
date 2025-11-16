@@ -99,13 +99,13 @@ FastAPI Backend
 ├── Document Processing Pipeline
 │   ├── PDF Extraction (PyMuPDF, PDFPlumber)
 │   ├── Text Chunking (LangChain)
-│   ├── Vector Embedding (OpenAI/Ollama)
+│   ├── Vector Embedding (Groq/OpenAI/Ollama)
 │   └── Storage (S3 + MongoDB + Qdrant)
 │
 ├── RAG System
 │   ├── Semantic Search (Qdrant)
 │   ├── Context Retrieval
-│   └── LLM Generation (GPT-4o/Ollama)
+│   └── LLM Generation (Groq Llama 3.1/GPT-4o/Ollama)
 │
 └── Report Generation
     ├── Content Extraction
@@ -126,7 +126,8 @@ FastAPI Backend
 - AWS S3 - Document storage
 
 **AI/ML**:
-- OpenAI GPT-4o - Primary LLM
+- Groq API (Llama 3.1 70B) - Primary LLM (FREE & Open Source)
+- OpenAI GPT-4o - Alternative LLM
 - Ollama - Local LLM alternative
 - LangChain - Orchestration
 - Sentence Transformers - Embeddings

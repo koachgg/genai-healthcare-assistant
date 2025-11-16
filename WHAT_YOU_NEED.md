@@ -215,7 +215,7 @@ Open browser:
 
 ## 📚 Next Steps
 
-1. **Set up the 4 required services** (OpenAI, AWS, MongoDB, Qdrant)
+1. **Set up the 4 required services** (Groq, AWS, MongoDB, Qdrant)
 2. **Create your `.env` file** with the credentials
 3. **Run the application** using docker-compose or manually
 4. **Test the API** at http://localhost:8000/api/v1/docs
@@ -236,13 +236,14 @@ Open browser:
 ## 🎓 Summary
 
 **YOU NEED**:
-1. OpenAI API key ($)
-2. AWS S3 credentials ($)
-3. MongoDB (free)
-4. Qdrant (free)
+1. Groq API key (FREE ✅)
+2. AWS S3 credentials ($1-5/month)
+3. MongoDB (FREE ✅)
+4. Qdrant (FREE ✅)
 
 **OPTIONAL**:
-5. Google Drive API setup (free, but requires more setup)
+5. OpenAI API key ($5-10/month, alternative to Groq)
+6. Google Drive API setup (FREE, but requires more setup)
 
 **ALREADY DONE**:
 - ✅ Code on GitHub

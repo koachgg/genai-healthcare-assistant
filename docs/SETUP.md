@@ -233,8 +233,9 @@ uvicorn main:app --reload
 ## Minimal .env Configuration
 
 ```env
-# OpenAI (Required)
-OPENAI_API_KEY=sk-your-key
+# Groq API (Recommended - FREE)
+GROQ_API_KEY=gsk-your-key
+GROQ_API_MODEL=llama-3.1-70b-versatile
 
 # AWS S3 (Required)
 access_key=your-aws-key
@@ -267,13 +268,14 @@ QDRANT_HOST_URL=http://localhost:6333
 ## What You Need to Set Up
 
 ### MUST HAVE:
-1. ✅ **OpenAI API Key** - for Q&A and generation
+1. ✅ **Groq API Key** - for Q&A and generation (FREE!)
 2. ✅ **AWS S3 Credentials** - for document storage
 3. ✅ **MongoDB** - for metadata (use Atlas free tier or Docker)
 4. ✅ **Qdrant** - for vector search (use Docker locally)
 
 ### OPTIONAL:
-5. ⭕ **Google Drive API** - only if you want Drive integration
+5. ⭕ **OpenAI API Key** - if you prefer GPT-4o over Groq
+6. ⭕ **Google Drive API** - only if you want Drive integration
    - Requires service account JSON
    - Requires shared folder
 
@@ -281,7 +283,14 @@ QDRANT_HOST_URL=http://localhost:6333
 
 ## Cost Estimate
 
-**Minimal (Testing)**:
+**Minimal (Testing) with Groq**:
+- Groq API: FREE ✅
+- MongoDB Atlas: Free tier ✅
+- Qdrant: Free (local Docker) ✅
+- AWS S3: ~$1-5/month
+- **Total: ~$1-5/month**
+
+**With OpenAI (Alternative)**:
 - OpenAI: ~$5-10/month
 - MongoDB Atlas: Free tier
 - Qdrant: Free (local Docker)

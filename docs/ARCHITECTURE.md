@@ -31,6 +31,7 @@
                                ▼
                     ┌──────────────────────┐
                     │   LLM Services       │
+                    │  • Groq (Llama 3.1)  │
                     │  • OpenAI (GPT-4o)   │
                     │  • Ollama (Local)    │
                     └──────────────────────┘
@@ -164,8 +165,9 @@ access_key=your_access_key
 secret_key=your_secret_key
 
 # LLM Services
-OLLAMA_ENDPOINT_URL=http://localhost:11434
-OPENAI_API_KEY=sk-...
+GROQ_API_KEY=gsk-...                      # Primary (FREE)
+OPENAI_API_KEY=sk-...                     # Alternative
+OLLAMA_ENDPOINT_URL=http://localhost:11434 # Alternative
 
 # Google Drive (Optional)
 GOOGLE_DRIVE_FOLDER_ID=your_folder_id

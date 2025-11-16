@@ -175,7 +175,7 @@ For lower traffic scenarios, deploy as Lambda function with API Gateway.
      --platform managed \
      --region us-central1 \
      --allow-unauthenticated \
-     --set-env-vars "OPENAI_API_KEY=sk-xxx,DOCUMENT_DB_CONNECTION_STRING=mongodb://xxx"
+     --set-env-vars "GROQ_API_KEY=gsk-xxx,DOCUMENT_DB_CONNECTION_STRING=mongodb://xxx"
    ```
 
 4. **Configure databases**
@@ -220,7 +220,7 @@ For lower traffic scenarios, deploy as Lambda function with API Gateway.
      --dns-name-label healthcare-assistant \
      --ports 8000 \
      --environment-variables \
-       OPENAI_API_KEY=sk-xxx \
+       GROQ_API_KEY=gsk-xxx \
        DOCUMENT_DB_CONNECTION_STRING=mongodb://xxx
    ```
 
@@ -278,7 +278,7 @@ DOCUMENT_DB_CONNECTION_STRING=mongodb+srv://prod-user:strong-password@prod-clust
 QDRANT_HOST_URL=https://prod-qdrant.yourdomain.com
 
 # Use secrets management
-OPENAI_API_KEY=sk-prod-key-from-secrets-manager
+GROQ_API_KEY=gsk-prod-key-from-secrets-manager
 access_key=aws-key-from-secrets-manager
 secret_key=aws-secret-from-secrets-manager
 ```
